@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './DTO/create_user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  private users = [{ id: '1', name: 'John' }];
+  private users: User[] = [{ id: '1', name: 'John' }];
 
   findAll() {
     return this.users;
   }
 
-  findOneById(id: string) {
+  findOneById(id: string): User {
     const result = this.users.find((user) => user.id === id);
     return result;
   }
