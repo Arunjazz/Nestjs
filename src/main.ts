@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // This is required for the validation of the DTO's
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
@@ -22,4 +23,3 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
-  

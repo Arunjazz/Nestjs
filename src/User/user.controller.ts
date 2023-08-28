@@ -8,7 +8,12 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './DTO/create_user.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 @ApiTags('user')
 // This is for seperarting the api's in the swagger ui
@@ -35,6 +40,7 @@ export class UserController {
 
   // Here we are telling the swagger that this api will return the User type
   @ApiCreatedResponse({ type: User })
+  @ApiBadRequestResponse({ description: 'Bad Request, follow the credentials' })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsAlphanumeric, MaxLength } from 'class-validator';
 
 export class CreateUserDto {
   // This is for the swagger ui, to show the id datatype in the swagger ui
@@ -7,5 +8,7 @@ export class CreateUserDto {
   id?: number;
 
   @ApiProperty()
+  @IsAlphanumeric()
+  @MaxLength(11)
   name: string;
 }
