@@ -1,15 +1,10 @@
-import { Post, Controller, Get } from '@nestjs/common';
+import { Post, Controller, Get, Body } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateUserDto } from './DTO/create_user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  // Here we are telling the swagger that this api will return the User type
-  // @ApiCreatedResponse({ type: User })
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.createUser(createUserDto);
-  // }
 
   @Get()
   async getAllUsers() {
@@ -18,10 +13,9 @@ export class UserController {
   }
 
   @Post('create')
-  // async create(@Body() createUserDto: CreateUserDto) {
-  async create() {
-    console.log('inside the controller of User for creating the user');
-    return await this.userService.createStudent();
+  async create(@Body() createUserDto: CreateUserDto) {
+    console.log('This is the input', createUserDto);
+    return await this.userService.createStudent(createUserDto);
   }
 }
 // ****** WE CAN ALSO EXPLORE ABOUT SWAGGER DECORATORS USIGN DOCUMENTATION ****** //

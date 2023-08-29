@@ -1,11 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
 
 export class CreateUserDto {
-  // This is for the swagger ui, to show the id datatype in the swagger ui
-  @ApiProperty({ required: false })
-  // If the parameter is optinal then we need to make it in this way, bcz swagger don't know about it
-  id?: string;
+  @IsNotEmpty()
+  @IsString()
+  fname: string;
 
-  @ApiProperty()
-  name: string;
+  @IsNotEmpty()
+  @IsString()
+  lname: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  contact: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  securityQ: string;
+
+  @IsNotEmpty()
+  @IsString()
+  securityA: string;
 }

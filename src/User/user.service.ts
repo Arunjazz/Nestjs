@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { register } from './entities/register.entity';
-import { faker } from '@faker-js/faker';
+import { CreateUserDto } from './DTO/create_user.dto';
 
 @Injectable()
 export class UserService {
@@ -14,20 +14,8 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  // async createStudent(): Promise<register> {
-  async createStudent() {
-    const createUser = [
-      {
-        fname: faker.lorem.words(1),
-        lname: faker.lorem.words(1),
-        email: faker.internet.email().toString(),
-        contact: faker.phone.number('9#########').toString(),
-        password: faker.internet.password().toString(),
-        securityQ: faker.lorem.words(5),
-        securityA: faker.lorem.words(5),
-      },
-    ];
-    const newStudent = this.userRepository.create(createUser);
+  async createStudent(createUserDto: CreateUserDto): Promise<register> {
+    const newStudent = this.userRepository.create(createUserDto);
     return this.userRepository.save(newStudent);
   }
 }
