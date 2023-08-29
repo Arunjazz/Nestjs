@@ -1,9 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './DTO/create_user.dto';
 import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { register } from './entities/register.entity';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { register } from './entities/register.entity';
+// import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
+  constructor(
+    @Inject('USER_REPOSITORY')
+    private photoRepository: Repository<register>
+  ) {}
+
+  async findAllStudents(): Promise<register[]> {
+    return this.photoRepository.find();
+  }
+
   private users: User[] = [{ id: '1', name: 'John' }];
 
   findAll() {
