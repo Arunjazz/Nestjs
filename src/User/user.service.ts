@@ -1,43 +1,33 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './DTO/create_user.dto';
-import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { register } from './entities/register.entity';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { register } from './entities/register.entity';
-// import { Repository } from 'typeorm';
+import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('USER_REPOSITORY')
-    private photoRepository: Repository<register>
+    private userRepository: Repository<register>
   ) {}
 
   async findAllStudents(): Promise<register[]> {
-    return this.photoRepository.find();
+    return this.userRepository.find();
   }
 
-  private users: User[] = [{ id: '1', name: 'John' }];
-
-  findAll() {
-    return this.users;
-  }
-
-  findOneById(id: string): User {
-    const result = this.users.find((user) => user.id === id);
-    return result;
-  }
-
-  getAll(): string {
-    return 'Hello World! from the user service';
-  }
-
-  createUser(createUserDto: CreateUserDto) {
-    // Important line for dealing with dates
-    const dt = new Date(Date.now());
-    this.users.push({ id: dt.toISOString(), ...createUserDto });
-    console.log(this.users);
-    return 'user created successfully';
+  // async createStudent(): Promise<register> {
+  async createStudent() {
+    const createUser = [
+      {
+        fname: faker.lorem.words(1),
+        lname: faker.lorem.words(1),
+        email: faker.internet.email().toString(),
+        contact: faker.phone.number('9#########').toString(),
+        password: faker.internet.password().toString(),
+        securityQ: faker.lorem.words(5),
+        securityA: faker.lorem.words(5),
+      },
+    ];
+    const newStudent = this.userRepository.create(createUser);
+    return this.userRepository.save(newStudent);
   }
 }
