@@ -12,10 +12,11 @@ export class UserController {
     return await this.userService.findAllStudents();
   }
 
-  @Post('create')
-  async create(@Body() createUserDto: CreateUserDto) {
-    console.log('This is the input', createUserDto);
-    return await this.userService.createStudent(createUserDto);
+  @Get('create')
+  // async create(@Body() createUserDto: CreateUserDto) {
+  async create() {
+    console.log('This is the input');
+    return await this.userService.createStudent();
   }
 }
 // ****** WE CAN ALSO EXPLORE ABOUT SWAGGER DECORATORS USIGN DOCUMENTATION ****** //
